@@ -67,7 +67,7 @@ router.route('/users')
 
 router.route('/movies')
     .get(authJwtController.isAuthenticated, function (req, res) {
-        Movies.find(function (err, movies) {
+        Movie.find(function (err, movies) {
             if (err) res.send(err);
             //return the movies
             res.json(movies);
@@ -108,6 +108,32 @@ router.delete('/movieDeleter', function(req, res){
     movie.genre = req.body.genre;
 
 });
+router.route('/findByIdUpdate/:ID')
+    .put(authJwtController.isAuthenticated, function (req, res) {
+        var id = req.params.ID;
+        Movie.findById(id, function(err, movie) {
+            if (err)
+                res.send(err);
+
+            movie.title = req.body.title;
+            movie.year_released = req.body.year_released;
+            movie.genre = req.body.genre;
+            movie.actors = req.body.actors;
+
+            movie.save(function(err) {
+                if (err)
+                    res.send(err);
+                else
+                    res.json({success: true});
+            })
+
+            });
+            // return that user
+            //res.json(movie);
+
+
+
+    });
 
 
 router.post('/signup', function(req, res) {

@@ -1,0 +1,173 @@
+{
+	"info": {
+		"name": "HW3",
+		"_postman_id": "2b7eb2a8-87bd-84d1-c5d8-d1f2a1f4f402",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "movieAdder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "885031d5-ad39-4516-afc8-660d370404a9",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonInfo = JSON.parse(responseBody); ",
+							"postman.setEnvironmentVariable(\"token\", jsonInfo.token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "\"JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYTcxNzYyNDcxZWMzNTZjMmRiY2U4YSIsInVzZXJuYW1lIjoicnNvb2QiLCJpYXQiOjE1MjA4OTk5NTZ9.DkfCq0KPJVv2cuQ7Sn_FgRdelQxHSNU-KAzRj3zh7Oc\"",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\t\"title\": \"Oceans 11\", \r\n\t\"year released\": \"2011\", \r\n\t\"genre\": \"Action\", \r\n\r\n\t\"Actors\": \r\n[\t{\r\n\t\"ActorName\": \"George Clooney\",\r\n\t\"CharacterName\": \"Daniel Ocean\"\r\n\t},\r\n\t\r\n\t{\r\n\t\"ActorName\": \"Matt Damon\", \r\n\t\"CharacterName\": \"Linus\"\r\n\t},\r\n\t\r\n\t{\r\n\t\"ActorName\": \"Brad Pitt\", \r\n\t\"CharacterName\": \"Stan\" \r\n\t}]\r\n\t\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"signin"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "nanu",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "dog",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"signup"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "findByIdUpdate",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\t\"title\": \"Oceans 11\", \r\n\t\"year_released\": \"2011\", \r\n\t\"genre\": \"Action\",\r\n\r\n\t\"Actors\":\r\n\t[{\r\n\t\"ActorName\": \"George Clooney\", \r\n\t\"CharacterName\": \"Daniel Ocean\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Matt Damon\", \r\n\t\"CharacterName\": \"Linus\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Brad Pitt\", \r\n\t\"CharacterName\": \"Stan\" \r\n\t}]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/findByIdUpdate/5aa9eac7e06f3f50688855e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"findByIdUpdate",
+						"5aa9eac7e06f3f50688855e3"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "findById(&display)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/movies/:5aa9eac7e06f3f50688855e3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"movies",
+						":5aa9eac7e06f3f50688855e3"
+					],
+					"variable": [
+						{
+							"key": "5aa9eac7e06f3f50688855e3",
+							"value": ""
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
