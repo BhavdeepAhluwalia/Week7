@@ -12,11 +12,10 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "885031d5-ad39-4516-afc8-660d370404a9",
+						"id": "1361c338-9ee8-417b-b423-ba866ae93ec1",
 						"type": "text/javascript",
 						"exec": [
-							"var jsonInfo = JSON.parse(responseBody); ",
-							"postman.setEnvironmentVariable(\"token\", jsonInfo.token);"
+							""
 						]
 					}
 				}
@@ -30,23 +29,23 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "\"JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhYTcxNzYyNDcxZWMzNTZjMmRiY2U4YSIsInVzZXJuYW1lIjoicnNvb2QiLCJpYXQiOjE1MjA4OTk5NTZ9.DkfCq0KPJVv2cuQ7Sn_FgRdelQxHSNU-KAzRj3zh7Oc\"",
-						"disabled": true
+						"value": "{{token}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n\t\"title\": \"Oceans 11\", \r\n\t\"year released\": \"2011\", \r\n\t\"genre\": \"Action\", \r\n\r\n\t\"Actors\": \r\n[\t{\r\n\t\"ActorName\": \"George Clooney\",\r\n\t\"CharacterName\": \"Daniel Ocean\"\r\n\t},\r\n\t\r\n\t{\r\n\t\"ActorName\": \"Matt Damon\", \r\n\t\"CharacterName\": \"Linus\"\r\n\t},\r\n\t\r\n\t{\r\n\t\"ActorName\": \"Brad Pitt\", \r\n\t\"CharacterName\": \"Stan\" \r\n\t}]\r\n\t\r\n}\r\n"
+					"raw": "{\r\n\r\n\t\"title\": \"Casino Royale\", \r\n\t\"year_released\": \"2006\", \r\n\t\"genre\": \"Action\",\r\n\r\n\t\"Actors\":\r\n\t[{\r\n\t\"ActorName\": \"Daniel Craig\", \r\n\t\"CharacterName\": \"James Bond\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Eva Green\", \r\n\t\"CharacterName\": \"Vesper\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Judi Dench\", \r\n\t\"CharacterName\": \"M\" \r\n\t}]\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/signin",
-					"protocol": "http",
+					"raw": "https://project3bhavdeep.herokuapp.com/movieAdder",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
-						"signin"
+						"movieAdder"
 					]
 				},
 				"description": ""
@@ -68,25 +67,26 @@
 					"urlencoded": [
 						{
 							"key": "username",
-							"value": "nanu",
+							"value": "lebron",
 							"description": "",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "dog",
+							"value": "james",
 							"description": "",
 							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/signup",
-					"protocol": "http",
+					"raw": "https://project3bhavdeep.herokuapp.com/signup",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
 						"signup"
 					]
@@ -118,13 +118,15 @@
 					"raw": "{\r\n\r\n\t\"title\": \"Oceans 11\", \r\n\t\"year_released\": \"2011\", \r\n\t\"genre\": \"Action\",\r\n\r\n\t\"Actors\":\r\n\t[{\r\n\t\"ActorName\": \"George Clooney\", \r\n\t\"CharacterName\": \"Daniel Ocean\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Matt Damon\", \r\n\t\"CharacterName\": \"Linus\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Brad Pitt\", \r\n\t\"CharacterName\": \"Stan\" \r\n\t}]\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/findByIdUpdate/5aa9eac7e06f3f50688855e3",
-					"protocol": "http",
+					"raw": "https://project3bhavdeep.herokuapp.com//findByIdUpdate/5aa9eac7e06f3f50688855e3",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
+						"",
 						"findByIdUpdate",
 						"5aa9eac7e06f3f50688855e3"
 					]
@@ -148,21 +150,16 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/movies/:5aa9eac7e06f3f50688855e3",
-					"protocol": "http",
+					"raw": "https://project3bhavdeep.herokuapp.com//findByIdUpdate",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
 					],
-					"port": "8080",
 					"path": [
-						"movies",
-						":5aa9eac7e06f3f50688855e3"
-					],
-					"variable": [
-						{
-							"key": "5aa9eac7e06f3f50688855e3",
-							"value": ""
-						}
+						"",
+						"findByIdUpdate"
 					]
 				},
 				"description": ""
