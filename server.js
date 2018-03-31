@@ -162,7 +162,7 @@ router.route('/findReview/:id')
             var id = req.params.id;
             Movie.findById(id, function(err, movie) {
                 if (err)
-                    res.send(err);
+                    res.json({ success: false, message: 'Movie not in database. '});
                 else {
                     var locate = {movieTitle: movie.title};
                     Review.find(locate, function(err, aReview)
