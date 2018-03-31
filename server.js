@@ -45,26 +45,33 @@ router.route('/users/:userId')
 
 router.route('/movies/:moviesId')
     .get(authJwtController.isAuthenticated, function (req, res) {
-        var id = rer.params.moviesId;
-        Movies.findbyId(id, function (err, movie){
+        var id = req.params.moviesId;
+        Movie.findById(id, function (err, movie){
 
             if (err) {
                 res.send(err);
-                res.json({success: false, message: 'Movie not in database. '})}
+                res.json({success: false, message: 'Movie not in database. '});
+            }
 
                     else {
                         if (req.query.review === true) {
                             var locate = {movieTitle: movie.title};
                             Review.find(locate, function (err, aReview) {
-                                if (err)
+                                if (err) {
                                     res.send(err);
-
+                                }
                                 else {
                                     var hold = new Object();
                                     hold.movie = movie;
                                     hold.Review = aReview;
 
-                                    res.send(hold);
+                                    console.log(aReview.movieTitle);
+                                    console.log(movie.title);
+
+                                    var hold2 = JSON.stringify(hold);
+                                    res.send(hold2);
+
+                                   // res.send(hold);
                                 }
                             });
                         }
