@@ -46,13 +46,31 @@ router.route('/users/:userId')
 router.route('/movies/:moviesId')
     .get(authJwtController.isAuthenticated, function (req, res) {
         var id = rer.params.moviesId;
-        Movies.findbyId(id, function (err, user){
-            if (err) res.send(err);
+        Movies.findbyId(id, function (err, movie){
 
-            var moviesJson = JSON.stringify(movies);
-            //return that movie
-            res.json(movies);
+            if (err) {
+                res.send(err);
+                res.json({success: false, message: 'Movie not in database. '})}
 
+                    else {
+                        if (req.query.review === true) {
+                            var locate = {movieTitle: movie.title};
+                            Review.find(locate, function (err, aReview) {
+                                if (err)
+                                    res.send(err);
+
+                                else {
+                                    var hold = new Object();
+                                    hold.movie = movie;
+                                    hold.Review = aReview;
+
+                                    res.send(hold);
+                                }
+                            });
+                        }
+                        else
+                            res.send(movie);
+                    }
             });
 
         });
@@ -164,14 +182,14 @@ router.route('/findReview/:id')
                 if (err)
                     res.json({ success: false, message: 'Movie not in database. '});
                 else {
-                    var locate = {movieTitle: movie.title};
-                    Review.find(locate, function(err, aReview)
-                        {
+                    if (req.query.review === true)
+                    {
+                        var locate = {movieTitle: movie.title};
+                        Review.find(locate, function (err, aReview) {
                             if (err)
                                 res.send(err);
 
-                            else
-                            {
+                            else {
                                 var hold = new Object();
                                 hold.movie = movie;
                                 hold.Review = aReview;
@@ -179,7 +197,9 @@ router.route('/findReview/:id')
                                 res.send(hold);
                             }
                         });
-
+                    }
+                    else
+                        res.send(movie);
                 }
             });
 
