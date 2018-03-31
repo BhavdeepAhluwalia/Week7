@@ -108,7 +108,7 @@ router.route('/reviewAdder')
             review.ReviewerName = req.body.ReviewerName;
             review.MovieReview = req.body.MovieReview;
             review.MovieRating = req.body.MovieRating;
-            review.movieId = req.body.movieId;
+            review.movieTitle = req.body.movieTitle;
 
             review.save(function(err)
                 {
@@ -174,7 +174,7 @@ router.route('/findReview/:id')
                             {
                                 var hold = new Object();
                                 hold.movie = movie;
-                                hold.aReview = aReview;
+                                hold.Review = aReview;
 
                                 res.send(hold);
                             }
