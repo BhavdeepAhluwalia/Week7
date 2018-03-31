@@ -5,6 +5,7 @@ var authJwtController = require('./auth_jwt');
 var User = require('./Users');
 var jwt = require('jsonwebtoken');
 var Movie = require('./movies');
+var Review = require('./reviews');
 var mongoose = require('mongoose');
 //var port = process.env.PORT || 8080; // set the port for our app
 //make secret key and add to .env
@@ -56,6 +57,20 @@ router.route('/movies/:moviesId')
 
         });
 
+router.route('/reviews/:reviewId')
+    .get(authJwtController.isAuthenticated, function (req, res)
+        {
+            var id =req.params.reviewId;
+            Review.findbyId(id, function(err, user)
+                {
+                    if (err) res.send(err);
+
+                    var reviewsJson = JSON.stringify(movies);
+                    //return that review
+                    res.json(review);
+                });
+        });
+
 router.route('/users')
     .get(authJwtController.isAuthenticated, function (req, res) {
         User.find(function (err, users) {
@@ -75,6 +90,37 @@ router.route('/movies')
 
     });
 
+router.route('/reviews')
+    .get(authJwtController.isAuthenticated, function (req, res)
+        {
+            Review.find(function (err, movies)
+                {
+                    if (err) res.send(err);
+                    //return the reviews
+                    res.json(reviews);
+                });
+        });
+
+router.route('/reviewAdder')
+    .post(authJwtController.isAuthenticated, function (req, res)
+        {
+            var Review = new Review();
+            review.ReviewerName = req.body.ReviewerName();
+            review.MovieReview = req.body.MovieReview();
+            review.MovieRating = req.body.MovieRating();
+
+            review.save(function(err)
+                {
+                    if (err)
+                    {
+                        if (err.code == 11000)
+                            return res.json({success: false, message: 'That review was already posted.'});
+                        else
+                            return res.send(err);
+                    }
+                    res.json({message: 'Review Created!'});
+                });
+        });
 
 router.route('/movieAdder')
     .post(authJwtController.isAuthenticated, function (req, res) {
@@ -108,6 +154,7 @@ router.delete('/movieDeleter', function(req, res){
     movie.genre = req.body.genre;
 
 });
+
 router.route('/findByIdUpdate/:ID')
     .put(authJwtController.isAuthenticated, function (req, res) {
         var id = req.params.ID;
