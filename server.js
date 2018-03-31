@@ -60,7 +60,7 @@ router.route('/movies/:moviesId')
 router.route('/reviews/:reviewId')
     .get(authJwtController.isAuthenticated, function (req, res)
         {
-            var id =req.params.reviewId;
+            var id = req.params.reviewId;
             Review.findbyId(id, function(err, user)
                 {
                     if (err) res.send(err);
@@ -145,7 +145,7 @@ router.route('/movieAdder')
             res.json({message: 'Movie Created!'});
 
         })
-        });
+    });
 
 
 router.delete('/movieDeleter', function(req, res){
@@ -155,6 +155,45 @@ router.delete('/movieDeleter', function(req, res){
     movie.genre = req.body.genre;
 
 });
+
+router.route('/findReview/:id')
+    .get(authJwtController.isAuthenticated, function (req, res)
+        {
+            var id = req.params.id;
+            Movie.findById(id, function(err, movie) {
+                if (err)
+                    res.send(err);
+                else {
+
+                    if (err)
+                        res.send(err);
+                    else {
+                        var hold = new Object();
+                        hold.movie = movie;
+                        hold.aReview = review;
+
+                        res.send(hold);
+                    }
+                }
+            });
+
+            review.ReviewerName = req.body.ReviewerName;
+            review.MovieReview = req.body.MovieReview;
+            review.MovieRating = req.body.MovieRating;
+            review.movieTitle = req.body.movieId;
+
+            review.save(function(err)
+                {
+                    if (err)
+                        res.send(err);
+                    else
+                        res.json({success: true});
+
+
+                });
+
+        });
+
 
 router.route('/findByIdUpdate/:ID')
     .put(authJwtController.isAuthenticated, function (req, res) {
@@ -173,7 +212,7 @@ router.route('/findByIdUpdate/:ID')
                     res.send(err);
                 else
                     res.json({success: true});
-            })
+            });
 
             });
             // return that user
