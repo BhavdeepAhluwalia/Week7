@@ -104,11 +104,11 @@ router.route('/reviews')
 router.route('/reviewAdder')
     .post(authJwtController.isAuthenticated, function (req, res)
         {
-            var Review = new Review();
-            review.ReviewerName = req.body.ReviewerName();
-            review.MovieReview = req.body.MovieReview();
-            review.MovieRating = req.body.MovieRating();
-            review.movieId = req.body.movieId();
+            var review = new Review();
+            review.ReviewerName = req.body.ReviewerName;
+            review.MovieReview = req.body.MovieReview;
+            review.MovieRating = req.body.MovieRating;
+            review.movieId = req.body.movieId;
 
             review.save(function(err)
                 {

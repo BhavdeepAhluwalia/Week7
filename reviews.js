@@ -7,8 +7,8 @@ var ReviewSchema = new Schema
 (
     {
         ReviewerName: {type: String, required: true},
-        MovieReview: {type: String, required: true}
-        MovieRating: {type: Number, required: true}
+        MovieReview: {type: String, required: true},
+        MovieRating: {type: Number, required: true},
         movieId: {type: String}
 
     }
