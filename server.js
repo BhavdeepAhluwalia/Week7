@@ -180,7 +180,7 @@ router.route('/findReview/:id')
             review.ReviewerName = req.body.ReviewerName;
             review.MovieReview = req.body.MovieReview;
             review.MovieRating = req.body.MovieRating;
-            review.movieTitle = req.body.movieId;
+            review.movieTitle = req.body.movieTitle;
 
             review.save(function(err)
                 {
