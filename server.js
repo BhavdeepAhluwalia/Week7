@@ -164,33 +164,24 @@ router.route('/findReview/:id')
                 if (err)
                     res.send(err);
                 else {
+                    var locate = {movieTitle: movie.title};
+                    Review.find(locate, function(err, aReview)
+                        {
+                            if (err)
+                                res.send(err);
 
-                    if (err)
-                        res.send(err);
-                    else {
-                        var hold = new Object();
-                        hold.movie = movie;
-                        hold.aReview = review;
+                            else
+                            {
+                                var hold = new Object();
+                                hold.movie = movie;
+                                hold.aReview = aReview;
 
-                        res.send(hold);
-                    }
+                                res.send(hold);
+                            }
+                        });
+
                 }
             });
-
-            review.ReviewerName = req.body.ReviewerName;
-            review.MovieReview = req.body.MovieReview;
-            review.MovieRating = req.body.MovieRating;
-            review.movieTitle = req.body.movieTitle;
-
-            review.save(function(err)
-                {
-                    if (err)
-                        res.send(err);
-                    else
-                        res.json({success: true});
-
-
-                });
 
         });
 
