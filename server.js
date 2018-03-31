@@ -108,6 +108,7 @@ router.route('/reviewAdder')
             review.ReviewerName = req.body.ReviewerName();
             review.MovieReview = req.body.MovieReview();
             review.MovieRating = req.body.MovieRating();
+            review.movieId = req.body.movieId();
 
             review.save(function(err)
                 {
