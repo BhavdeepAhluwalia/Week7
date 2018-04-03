@@ -42,223 +42,271 @@ router.route('/users/:userId')
             res.json(user);
         });
     });
+/*________________________________________________________________________________________________________________________
 
+.get(authJwtController.isAuthenticated, function (req, res)
+{
+    var id = req.params.moviesID;
+    Movie.aggregate([
+        {
+            $match: {
+                _id: mongoose.Types.ObjectId(id)
+            }
+        },
+        {
+            $lookup: {
+                from: "reviews",
+                localField: title,
+                foreignField: movieTitle,
+                as: "reviews"
+            }
+        }
+    ]).exec(function(err,movies){
+        if (err) res.status(500).send(err);
+
+        else
+            res.send(movies);
+    });
+*/
 router.route('/movies/:moviesId')
     .get(authJwtController.isAuthenticated, function (req, res) {
         var id = req.params.moviesId;
-        Movie.findById(id, function (err, movie) {
 
-            if (err) {
-                res.send(err);
-                res.json({success: false, message: 'Movie not in database. '});
-            }
-
-            else {
                 if (req.query.review === true) {
-                    var locate = {movieTitle: movie.title};
-                    Review.find(locate, function (err, aReview) {
-                        if (err) {
-                            res.send(err);
+
+                    Movie.aggregate([
+                        {
+                            $match: {
+                                _id: mongoose.Types.ObjectId(id)
+                            }
+                        },
+                        {
+                            $lookup: {
+                                from: "reviews",
+                                localField: title,
+                                foreignField: movieTitle,
+                                as: "reviews"
+                            }
                         }
-                        else {
-                            var hold = new Object();
-                            hold.movie = movie;
-                            hold.Review = aReview;
+                    ]).exec(function (err, movies) {
+                        if (err) res.status(500).send(err);
 
-                            console.log(aReview.movieTitle);
-                            console.log(movie.title);
-
-                            // var hold2 = JSON.stringify(hold);
-                            //res.send(hold2);
-
-                            res.send(hold);
-                        }
+                        else
+                            res.send(movies);
                     });
                 }
                 else
-                    res.send(movie);
-            }
-        });
-
-
-        router.route('/reviews/:reviewId')
-            .get(authJwtController.isAuthenticated, function (req, res) {
-                var id = req.params.reviewId;
-                Review.findbyId(id, function (err, user) {
-                    if (err) res.send(err);
-
-                    var reviewsJson = JSON.stringify(movies);
-                    //return that review
-                    res.json(review);
-                });
-            });
-
-        router.route('/users')
-            .get(authJwtController.isAuthenticated, function (req, res) {
-                User.find(function (err, users) {
-                    if (err) res.send(err);
-                    // return the users
-                    res.json(users);
-                });
-            });
-
-        router.route('/movies')
-            .get(authJwtController.isAuthenticated, function (req, res) {
-                Movie.find(function (err, movies) {
-                    if (err) res.send(err);
-                    //return the movies
-                    res.json(movies);
-                });
-
-            });
-
-        router.route('/reviews')
-            .get(authJwtController.isAuthenticated, function (req, res) {
-                Review.find(function (err, movies) {
-                    if (err) res.send(err);
-                    //return the reviews
-                    res.json(reviews);
-                });
-            });
-
-        router.route('/reviewAdder')
-            .post(authJwtController.isAuthenticated, function (req, res) {
-                var review = new Review();
-                review.ReviewerName = req.body.ReviewerName;
-                review.MovieReview = req.body.MovieReview;
-                review.MovieRating = req.body.MovieRating;
-                review.movieTitle = req.body.movieTitle;
-
-                review.save(function (err) {
-                    if (err) {
-                        if (err.code == 11000)
-                            return res.json({success: false, message: 'That review was already posted.'});
-                        else
-                            return res.send(err);
-                    }
-                    res.json({message: 'Review Created!'});
-                });
-            });
-
-        router.route('/movieAdder')
-            .post(authJwtController.isAuthenticated, function (req, res) {
-
-                var movie = new Movie();
-                movie.title = req.body.title;
-                movie.year_released = req.body.year_released;
-                movie.genre = req.body.genre;
-                movie.actors = req.body.actors; //inserts whole array from movies.js schemas
-
-
-                movie.save(function (err) {
-                    if (err) {
-                        //duplicate entry
-                        if (err.code == 11000)
-                            return res.json({success: false, message: 'That movie already exists.'});
-                        else
-                            return res.send(err);
-                    }
-                    res.json({message: 'Movie Created!'});
-
-                })
-            });
-
-
-        router.delete('/movieDeleter', function (req, res) {
-            var movie = new Movie();
-            movie.title = req.body.title;
-            movie.year_released = req.body.year_released;
-            movie.genre = req.body.genre;
-
-        });
-
-        router.route('/findReview/:ID')
-            .get(authJwtController.isAuthenticated, function (req, res)
-            {
-                var id = req.params.id;
-                Movie.findById(id, function (err, movie)
                 {
-                    if (err)
-                        res.json({success: false, message: 'Movie not in database. '});
-                    else {
-                        if (req.query.review === true)
-                        {
-                            var locate = {movieTitle: movie.title};
-                            Review.find(locate, function(err, aReview) {
+                    Movie.findById(id, function(err, movie) {
+                        if(err)
+                            res.send(err);
+                        else
+                            res.json(movie);
+                    });
+                }
+                    });
+
+
+                    router.route('/reviews/:reviewId')
+                        .get(authJwtController.isAuthenticated, function (req, res) {
+                            var id = req.params.reviewId;
+                            Review.findbyId(id, function (err, user) {
+                                if (err) res.send(err);
+
+                                var reviewsJson = JSON.stringify(movies);
+                                //return that review
+                                res.json(review);
+                            });
+                        });
+
+                    router.route('/users')
+                        .get(authJwtController.isAuthenticated, function (req, res) {
+                            User.find(function (err, users) {
+                                if (err) res.send(err);
+                                // return the users
+                                res.json(users);
+                            });
+                        });
+
+                    router.route('/movies')
+                        .get(authJwtController.isAuthenticated, function (req, res) {
+                            Movie.find(function (err, movies) {
+                                if (err) res.send(err);
+                                //return the movies
+                                res.json(movies);
+                            });
+
+                        });
+
+                    router.route('/reviews')
+                        .get(authJwtController.isAuthenticated, function (req, res) {
+                            Review.find(function (err, movies) {
+                                if (err) res.send(err);
+                                //return the reviews
+                                res.json(reviews);
+                            });
+                        });
+
+                    router.route('/reviewAdder')
+                        .post(authJwtController.isAuthenticated, function (req, res) {
+                            var review = new Review();
+                            review.ReviewerName = req.body.ReviewerName;
+                            review.MovieReview = req.body.MovieReview;
+                            review.MovieRating = req.body.MovieRating;
+                            review.movieTitle = req.body.movieTitle;
+
+                            review.save(function (err) {
+                                if (err) {
+                                    if (err.code == 11000)
+                                        return res.json({success: false, message: 'That review was already posted.'});
+                                    else
+                                        return res.send(err);
+                                }
+                                res.json({message: 'Review Created!'});
+                            });
+                        });
+
+                    router.route('/movieAdder')
+                        .post(authJwtController.isAuthenticated, function (req, res) {
+
+                            var movie = new Movie();
+                            movie.title = req.body.title;
+                            movie.year_released = req.body.year_released;
+                            movie.genre = req.body.genre;
+                            movie.actors = req.body.actors; //inserts whole array from movies.js schemas
+
+
+                            movie.save(function (err) {
+                                if (err) {
+                                    //duplicate entry
+                                    if (err.code == 11000)
+                                        return res.json({success: false, message: 'That movie already exists.'});
+                                    else
+                                        return res.send(err);
+                                }
+                                res.json({message: 'Movie Created!'});
+
+                            })
+                        });
+
+
+                    router.delete('/movieDeleter', function (req, res) {
+                        var movie = new Movie();
+                        movie.title = req.body.title;
+                        movie.year_released = req.body.year_released;
+                        movie.genre = req.body.genre;
+
+                    });
+
+                    router.route('/findReview/:ID')
+                        .get(authJwtController.isAuthenticated, function (req, res) {
+                            var id = req.params.ID;
+                            Movie.aggregate([
+                                {
+                                    $match: {
+                                        _id: mongoose.Types.ObjectId(id)
+                                    }
+                                },
+                                {
+                                    $lookup: {
+                                        from: "reviews",
+                                        localField: title,
+                                        foreignField: movieTitle,
+                                        as: "reviews"
+                                    }
+                                }
+                            ]).exec(function (err, movies) {
+                                if (err) res.status(500).send(err);
+
+                                else
+                                    res.send(movies);
+                            });
+                            /* Movie.findById(id, function (err, movie)
+                             {
+                                 if (err)
+                                     res.json({success: false, message: 'Movie not in database. '});
+                                 else {
+                                     if (req.query.review === true)
+                                     {
+                                         var locate = {movieTitle: movie.title};
+                                         Review.find(locate, function(err, aReview) {
+                                             if (err)
+                                                 res.send(err);
+
+                                             else {
+
+                                                 var hold = new Object();
+                                                 hold.movie = movie;
+                                                 hold.Review = aReview;
+
+                                                return res.send(hold);
+                                             }
+                                         });
+                                     }
+                                     else
+
+                                         res.send(movie);
+                                 }
+                             }); */
+
+                        });
+
+
+                    router.route('/findByIdUpdate/:ID')
+                        .put(authJwtController.isAuthenticated, function (req, res) {
+                            var id = req.params.ID;
+                            Movie.findById(id, function (err, movie) {
                                 if (err)
                                     res.send(err);
 
-                                else {
+                                movie.title = req.body.title;
+                                movie.year_released = req.body.year_released;
+                                movie.genre = req.body.genre;
+                                movie.actors = req.body.actors;
 
-                                    var hold = new Object();
-                                    hold.movie = movie;
-                                    hold.Review = aReview;
+                                movie.save(function (err) {
+                                    if (err)
+                                        res.send(err);
+                                    else
+                                        res.json({success: true});
+                                });
 
-                                   return res.send(hold);
+                            });
+                            // return that user
+                            //res.json(movie);
+
+
+                        });
+
+
+                    router.post('/signup', function (req, res) {
+                        if (!req.body.username || !req.body.password) {
+                            res.json({success: false, msg: 'Please pass username and password.'});
+                        }
+                        else {
+                            var user = new User();
+                            user.name = req.body.name;
+                            user.username = req.body.username;
+                            user.password = req.body.password;
+                            // save the user
+                            user.save(function (err) {
+                                if (err) {
+                                    // duplicate entry
+                                    if (err.code == 11000)
+                                        return res.json({
+                                            success: false,
+                                            message: 'A user with that username already exists. '
+                                        });
+                                    else
+                                        return res.send(err);
                                 }
+
+                                res.json({message: 'User created!'});
                             });
                         }
-                        else
-
-                            res.send(movie);
-                    }
-                });
-
-            });
-
-
-        router.route('/findByIdUpdate/:ID')
-            .put(authJwtController.isAuthenticated, function (req, res) {
-                var id = req.params.ID;
-                Movie.findById(id, function (err, movie) {
-                    if (err)
-                        res.send(err);
-
-                    movie.title = req.body.title;
-                    movie.year_released = req.body.year_released;
-                    movie.genre = req.body.genre;
-                    movie.actors = req.body.actors;
-
-                    movie.save(function (err) {
-                        if (err)
-                            res.send(err);
-                        else
-                            res.json({success: true});
                     });
 
-                });
-                // return that user
-                //res.json(movie);
 
-
-            });
-
-
-        router.post('/signup', function (req, res) {
-            if (!req.body.username || !req.body.password) {
-                res.json({success: false, msg: 'Please pass username and password.'});
-            }
-            else {
-                var user = new User();
-                user.name = req.body.name;
-                user.username = req.body.username;
-                user.password = req.body.password;
-                // save the user
-                user.save(function (err) {
-                    if (err) {
-                        // duplicate entry
-                        if (err.code == 11000)
-                            return res.json({success: false, message: 'A user with that username already exists. '});
-                        else
-                            return res.send(err);
-                    }
-
-                    res.json({message: 'User created!'});
-                });
-            }
-        });
-
-    });
 
 router.post('/signin', function(req, res) {
     var userNew = new User();
