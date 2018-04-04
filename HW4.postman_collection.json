@@ -1,0 +1,286 @@
+{
+	"info": {
+		"_postman_id": "2b7eb2a8-87bd-84d1-c5d8-d1f2a1f4f402",
+		"name": "HW3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "movieAdder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1361c338-9ee8-417b-b423-ba866ae93ec1",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\t\"title\": \"Casino Royale\", \r\n\t\"year_released\": \"2006\", \r\n\t\"genre\": \"Action\",\r\n\r\n\t\"Actors\":\r\n\t[{\r\n\t\"ActorName\": \"Daniel Craig\", \r\n\t\"CharacterName\": \"James Bond\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Eva Green\", \r\n\t\"CharacterName\": \"Vesper\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Judi Dench\", \r\n\t\"CharacterName\": \"M\" \r\n\t}]\r\n}"
+				},
+				"url": {
+					"raw": "https://project3bhavdeep.herokuapp.com/movieAdder",
+					"protocol": "https",
+					"host": [
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movieAdder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "lebron",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "james",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://project3bhavdeep.herokuapp.com/signup",
+					"protocol": "https",
+					"host": [
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findByIdUpdate",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "",
+						"value": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\t\"title\": \"Oceans 11\", \r\n\t\"year_released\": \"2011\", \r\n\t\"genre\": \"Action\",\r\n\r\n\t\"Actors\":\r\n\t[{\r\n\t\"ActorName\": \"George Clooney\", \r\n\t\"CharacterName\": \"Daniel Ocean\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Matt Damon\", \r\n\t\"CharacterName\": \"Linus\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Brad Pitt\", \r\n\t\"CharacterName\": \"Stan\" \r\n\t}]\r\n}"
+				},
+				"url": {
+					"raw": "https://project3bhavdeep.herokuapp.com//findByIdUpdate/5aa9eac7e06f3f50688855e3",
+					"protocol": "https",
+					"host": [
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"",
+						"findByIdUpdate",
+						"5aa9eac7e06f3f50688855e3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findById(&display)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://project3bhavdeep.herokuapp.com//findByIdUpdate",
+					"protocol": "https",
+					"host": [
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"",
+						"findByIdUpdate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviewAdder",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9966902e-8d30-42ba-8f97-845381e5c64f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ReviewerName\": \"Nanu Ahluwalia\",\n    \"MovieReview\": \"This movie is pretty cool\", \n    \"MovieRating\": \"4\",\n    \"movieId\": \"1\"\n    \n}"
+				},
+				"url": {
+					"raw": "https://project3bhavdeep.herokuapp.com/reviewAdder",
+					"protocol": "https",
+					"host": [
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"reviewAdder"
+					]
+				},
+				"description": "adds review to database"
+			},
+			"response": []
+		},
+		{
+			"name": "findMovie(review not tied)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "movieId",
+						"value": "{{reviewtoken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\t\"title\": \"Dhoom 3\", \r\n\t\"year_released\": \"2003\", \r\n\t\"genre\": \"Action\",\r\n\r\n\t\"Actors\":\r\n\t[{\r\n\t\"ActorName\": \"Daniel Craig\", \r\n\t\"CharacterName\": \"James Bond\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Eva Green\", \r\n\t\"CharacterName\": \"Vesper\"\r\n\t},\r\n\t{\r\n\t\"ActorName\": \"Judi Dench\", \r\n\t\"CharacterName\": \"M\" \r\n\t}]\r\n}"
+				},
+				"url": {
+					"raw": "https://project3bhavdeep.herokuapp.com/findReview/{{reviewtoken}}",
+					"protocol": "https",
+					"host": [
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"findReview",
+						"{{reviewtoken}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "movie & reviews output",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Oceans11id}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "https://project3bhavdeep.herokuapp.com/movies/{{Oceans11id}}?review=true",
+					"protocol": "https",
+					"host": [
+						"project3bhavdeep",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies",
+						"{{Oceans11id}}"
+					],
+					"query": [
+						{
+							"key": "review",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
