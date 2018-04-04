@@ -72,7 +72,7 @@ router.route('/movies/:moviesId')
     .get(authJwtController.isAuthenticated, function (req, res) {
         var id = req.params.moviesId;
 
-                if (req.query.review === true) {
+                if (req.query.review === "true") {
 
                     Movie.aggregate([
                         {
@@ -83,8 +83,8 @@ router.route('/movies/:moviesId')
                         {
                             $lookup: {
                                 from: "reviews",
-                                localField: title,
-                                foreignField: movieTitle,
+                                localField: "title",
+                                foreignField: "movieTitle",
                                 as: "reviews"
                             }
                         }
@@ -197,7 +197,7 @@ router.route('/movies/:moviesId')
                         movie.genre = req.body.genre;
 
                     });
-
+/*
                     router.route('/findReview/:ID')
                         .get(authJwtController.isAuthenticated, function (req, res) {
                             var id = req.params.ID;
@@ -210,8 +210,8 @@ router.route('/movies/:moviesId')
                                 {
                                     $lookup: {
                                         from: "reviews",
-                                        localField: title,
-                                        foreignField: movieTitle,
+                                        localField: movieTitle,
+                                        foreignField: title,
                                         as: "reviews"
                                     }
                                 }
@@ -249,7 +249,7 @@ router.route('/movies/:moviesId')
                                  }
                              }); */
 
-                        });
+                      //  });
 
 
                     router.route('/findByIdUpdate/:ID')
