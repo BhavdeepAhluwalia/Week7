@@ -15,13 +15,19 @@ var MoviesSchema = new Schema(
     {
         title: {type: String, required: true},
         year_released: {type: String, required: true},
+        averageRating: {type: Number},
+        reviewCount: {type: Number},
+
         genre:
             {
                 type: String,
                 required: true,
                 enum: ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Horror', 'Mystery', 'Thriller', 'Western']
             },
-            Actors: [ActorSchema] //array for actors from schema
+            Actors: [ActorSchema], //array for actors from schema
+
+
+
     });
 
 

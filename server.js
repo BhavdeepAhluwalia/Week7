@@ -132,11 +132,22 @@ router.route('/users')
 
 router.route('/movies')
     .get(authJwtController.isAuthenticated, function (req, res) {
-        Movie.find(function (err, movies) {
-            if (err) res.send(err);
-            //return the movies
-            res.json(movies);
+
+        if (req.query.review === "true") {
+
+            Movie.find(function (err, movies) {
+                if (err) res.send(err);
+                //return the movies
+                else {
+
+                    movies.sort((a,b) => parseFloat(b.averageRating) - parseFloat(a.averageRating)); //sorts in desending order for average rating
+
+                    res.json(movies);
+                }
             });
+
+        }
+
 
         });
 
@@ -149,23 +160,42 @@ router.route('/movies')
                             });
                         });
 
-                    router.route('/reviewAdder')
+                    router.route('/reviewAdder/:movieId')
                         .post(authJwtController.isAuthenticated, function (req, res) {
-                            var review = new Review();
-                            review.ReviewerName = req.body.ReviewerName;
-                            review.MovieReview = req.body.MovieReview;
-                            review.MovieRating = req.body.MovieRating;
-                            review.movieTitle = req.body.movieTitle;
 
-                            review.save(function (err) {
-                                if (err) {
-                                    if (err.code == 11000)
-                                        return res.json({success: false, message: 'That review was already posted.'});
-                                    else
-                                        return res.send(err);
+                            Movie.findById(id, function (err, movie) {
+                                if (err){
+                                    res.send(err);
                                 }
-                                res.json({message: 'Review Created!'});
+                                else
+                                {
+                                    var review = new Review();
+                                    review.ReviewerName = req.body.ReviewerName;
+                                    review.MovieReview = req.body.MovieReview;
+                                    review.MovieRating = req.body.MovieRating;
+                                    review.movieTitle = req.body.movieTitle;
+                                    movie.reviewCount =+ 1;
+                                    movie.averageRating = ((movie.averageRating * (movie.reviewCount-1)+ movie.MovieRating)) / movie.reviewCount;
+
+
+                                    review.save(function (err) {
+                                            if (err.code == 11000)
+                                                return res.json({success: false, message: 'That review was already posted.'});
+                                            else{
+
+                                                movie.save(function (err) {
+                                                    if (err) {
+                                                        res.send(err);
+                                                    }
+                                                    else
+                                                        res.json({message: 'Review Created!'});
+                                                });
+                                            }
+
+                                    });
+                                }
                             });
+
                         });
 
                     router.route('/movieAdder')
@@ -176,6 +206,8 @@ router.route('/movies')
                             movie.year_released = req.body.year_released;
                             movie.genre = req.body.genre;
                             movie.Actors = req.body.Actors; //inserts whole array from movies.js schemas
+                            movie.averageRating = 0;
+                            movie.reviewCount = 0;
 
                             movie.save(function (err) {
                                 if (err) {
@@ -187,7 +219,8 @@ router.route('/movies')
                                 }
                                 res.json({message: 'Movie Created!'});
 
-                            })
+                            });
+
                         });
 
 
