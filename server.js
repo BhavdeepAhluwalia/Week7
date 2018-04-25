@@ -139,17 +139,32 @@ router.route('/movies')
                 if (err) res.send(err);
                 //return the movies
                 else {
+                    Movie.aggregate([{
+                        $lookup: {
+                            from: "reviews",
+                            localField: "title",
+                            foreignField: "movieTitle",
+                            as: 'review'
+                        }
 
-                    movies.sort((a,b) => parseFloat(b.averageRating) - parseFloat(a.averageRating)); //sorts in desending order for average rating
+                    }
+                    ], function (err, result) {
+                    if (err) res.send(err);
+                    else {
+                        movies.sort((a, b) => parseFloat(b.averageRating) - parseFloat(a.averageRating));
 
-                    res.json(movies);
-                }
-            });
+                         //sorts in desending order for average rating
 
+                        res.json(result);
+                    }
+                });
         }
-
-
         });
+
+            }
+
+
+});
 
                     router.route('/reviews')
                         .get(authJwtController.isAuthenticated, function (req, res) {
@@ -181,7 +196,7 @@ router.route('/movies')
                                     console.log(movie.averageRating);
                                     console.log(movie.reviewCount);
 
-                                    movie.reviewCount =+ 1;
+                                    movie.reviewCount += 1;
                                     movie.averageRating = (movie.averageRating *( movie.reviewCount-1)+ review.MovieRating) / movie.reviewCount;
 
 
