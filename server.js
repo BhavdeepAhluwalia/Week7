@@ -163,7 +163,7 @@ router.route('/movies')
                     router.route('/reviewAdder/:movieId')
                         .post(authJwtController.isAuthenticated, function (req, res) {
 
-                            Movie.findById(id, function (err, movie) {
+                            Movie.findById(req.params.movieId, function (err, movie) {
                                 if (err){
                                     res.send(err);
                                 }
@@ -174,12 +174,19 @@ router.route('/movies')
                                     review.MovieReview = req.body.MovieReview;
                                     review.MovieRating = req.body.MovieRating;
                                     review.movieTitle = req.body.movieTitle;
+                                    if (movie.averageRating === null)
+                                        movie.averageRating = 0;
+                                    if (movie.reviewCount === null)
+                                        movie.reviewCount = 0;
+                                    console.log(movie.averageRating);
+                                    console.log(movie.reviewCount);
+
                                     movie.reviewCount =+ 1;
-                                    movie.averageRating = ((movie.averageRating * (movie.reviewCount-1)+ movie.MovieRating)) / movie.reviewCount;
+                                    movie.averageRating = (movie.averageRating *( movie.reviewCount-1)+ review.MovieRating) / movie.reviewCount;
 
 
                                     review.save(function (err) {
-                                            if (err.code == 11000)
+                                            if (err)
                                                 return res.json({success: false, message: 'That review was already posted.'});
                                             else{
 
