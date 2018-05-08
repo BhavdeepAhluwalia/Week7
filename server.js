@@ -57,7 +57,7 @@ router.route('/users/:userId')
             }
         },
         {
-            $lookup: {
+            $lookup:it  {
                 from: "reviews",
                 localField: title,
                 foreignField: movieTitle,
