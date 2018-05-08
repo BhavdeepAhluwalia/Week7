@@ -8,6 +8,7 @@ var Movie = require('./movies');
 var Review = require('./reviews');
 var mongoose = require('mongoose');
 var cors = require('cors');
+var jToken = require('jsonwebtoken');
 //var port = process.env.PORT || 8080; // set the port for our app
 //make secret key and add to .env
 
@@ -185,7 +186,12 @@ router.route('/movies')
                                 else
                                 {
                                     var review = new Review();
-                                    review.ReviewerName = req.body.ReviewerName;
+                                    console.log(JSON.stringify(req.headers))
+                                    console.log(req.headers.authorization)
+                                    var token = req.headers.authorization.substring(4,req.headers.authorization.length)
+                                    console.log('token = '+token)
+                                    var jObject = jToken.verify(token, process.env.SECRET_KEY)
+                                    review.ReviewerName = jObject.username;
                                     review.MovieReview = req.body.MovieReview;
                                     review.MovieRating = req.body.MovieRating;
                                     review.movieTitle = req.body.movieTitle;
