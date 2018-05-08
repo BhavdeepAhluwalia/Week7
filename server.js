@@ -194,7 +194,7 @@ router.route('/movies')
                                     review.ReviewerName = jObject.username;
                                     review.MovieReview = req.body.MovieReview;
                                     review.MovieRating = req.body.MovieRating;
-                                    review.movieTitle = req.body.movieTitle;
+                                    review.movieTitle = movie.movieTitle;
                                     if (movie.averageRating === null)
                                         movie.averageRating = 0;
                                     if (movie.reviewCount === null)
